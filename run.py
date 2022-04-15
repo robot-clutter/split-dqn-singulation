@@ -157,11 +157,24 @@ def train(args):
 
 
 def eval(args):
+    logger = Logger('logs/eval_dqn')
+
     with open('yaml/params.yml', 'r') as stream:
         params = yaml.safe_load(stream)
-
-    logger = Logger('logs/eval_dqn')
     params['agent']['log_dir'] = logger.log_dir
+
+    if args.env == 'complex':
+        params['env']['scene_generation']['all_equal_height_prob'] = 0.2
+        params['env']['scene_generation']['nr_of_obstacles'] = [8, 13]
+
+        params['mdp']['nr_discrete_actions'] = 24
+        params['mdp']['nr_primitives'] = 3
+
+        # Add the extra primitive in agent's params
+        params['agent']['batch_size'] = [64, 64, 64]
+        params['agent']['learning_rate'] = [0.001, 0.001, 0.001]
+        params['agent']['hidden_units'] = [[100, 100], [100, 100], [100, 100]]
+        params['agent']['loss'] = ['mse', 'mse', 'mse']
 
     env = BulletEnv(params=params['env'])
     mdp = DiscreteMDP(params)
@@ -231,4 +244,4 @@ if __name__ == '__main__':
     else:
         train(args)
 
-    analyze_train_results(dir='logs/train_split-dqn')
+    # analyze_train_results(dir='logs/train-split-dqn-complex')

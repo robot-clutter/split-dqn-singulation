@@ -163,9 +163,12 @@ class BulletEnv(Env):
             objects = [clt.core.Object(name='target', pos=np.array([1.0, 1.0, 0.05]), quat=clt.ori.Quaternion(),
                                        size=target_size)]
 
+            all_equal_height = self.rng.uniform(0, 1) < self.params['scene_generation']['all_equal_height_prob']
             for j in range(n_obstacles):
                 obs_size = sample_size(self.params['scene_generation']['obstacle']['min_bounding_box'],
-                                      self.params['scene_generation']['obstacle']['max_bounding_box'])
+                                       self.params['scene_generation']['obstacle']['max_bounding_box'])
+                if all_equal_height:
+                    obs_size[2] = target_size[2]
 
                 obj = clt.core.Object(name='obs_' + str(j),
                                       pos=np.array([1.0, 1.0, 0.05]),

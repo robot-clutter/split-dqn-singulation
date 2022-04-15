@@ -55,3 +55,4 @@ __pycache__
 
 /venv
 clt_core/
+clutter_core/

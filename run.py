@@ -220,14 +220,14 @@ def parse_args():
     parser.add_argument('--episode_max_steps', default=10, type=int, help='Maximum number of steps in each episode')
 
     # -------------- Training options --------------
-    parser.add_argument('--exp_name', default='hybrid', type=str, help='Name of experiment to run')
+    parser.add_argument('--exp_name', default='', type=str, help='Name of experiment to run')
     parser.add_argument('--agent', default='split-dqn', type=str, help='Name of the agent')
     parser.add_argument('--n_episodes', default=10000, type=int, help='Number of episodes to run for')
     parser.add_argument('--save_every', default=100, type=int, help='Number of episodes to save the model')
 
     # -------------- Testing options --------------
     parser.add_argument('--is_testing', dest='is_testing', action='store_true', default=False)
-    parser.add_argument('--checkpoint', default='pretrained_model', type=str,
+    parser.add_argument('--checkpoint', default='downloads/simple', type=str,
                         help='The path to the model to load for evaluation')
     parser.add_argument('--test_trials', default=1000, type=int, help='Number of episodes to evaluate for')
 
